@@ -11,6 +11,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriverService
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 import spock.lang.Specification
+import org.junit.AfterClass
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,10 +42,6 @@ class SearchPageSpec extends Specification {
         }
         driver.manage().window().setSize(new Dimension(1024, 768))
         driver
-    }
-
-    private static WebDriver getFirfoxDriver() {
-        return
     }
 
     private static DesiredCapabilities getDesiredCapabilities(String browserName) {
@@ -91,7 +88,7 @@ class SearchPageSpec extends Specification {
         myUA
         myIP
 
-
+        driver.quit()
     }
 
     void "test bar"() {
@@ -103,11 +100,11 @@ class SearchPageSpec extends Specification {
         driver.get("http://www.google.com");
         // Read values from page
         File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE)
-        FileUtils.copyFile(file, new File(dstDir, "{driver.getTitle()}.png"))
+        FileUtils.copyFile(file, new File(dstDir, "${driver.getTitle()}.png"))
 
         then:
         driver.getTitle()
-
+        driver.quit()
 
     }
 
@@ -120,11 +117,10 @@ class SearchPageSpec extends Specification {
         driver.get("http://bard-qa.broadinstitute.org");
         // Read values from page
         File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE)
-        FileUtils.copyFile(srcFile, new File(dstDir, "{driver.getTitle()}.png"))
+        FileUtils.copyFile(srcFile, new File(dstDir, "${driver.getTitle()}.png"))
 
         then:
         driver.getTitle()
+        driver.quit()
     }
-
-
 }
