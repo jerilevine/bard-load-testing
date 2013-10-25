@@ -5,10 +5,9 @@ import static org.junit.Assert.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 
@@ -24,6 +23,7 @@ import static bard.util.SeleniumUtils.getDriver;
  * To change this template use File | Settings | File Templates.
  */
 public class SearchPageTestCase {
+
     @Test
     public void testFoo() {
         WebDriver driver = getDriver(PHANTOMJS);
@@ -44,22 +44,21 @@ public class SearchPageTestCase {
         driver.get("http://www.google.com");
 
         File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(file, new File(getDstDir(), "${driver.getTitle()}.png"));
+        FileUtils.copyFile(file, new File(getDstDir(), driver.getTitle() + "_" + Thread.currentThread().getName() + ".png"));
 
         assertTrue(StringUtils.isNotBlank(driver.getTitle()));
         driver.quit();
-
     }
 
     @Test
     public void testBard() throws Exception {
-        WebDriver driver = getDriver(FIREFOX);
-        driver.get("http://bard-qa.broadinstitute.org");
+        WebDriver driver = getDriver(PHANTOMJS);
+        driver.get("https://bard-qa.broadinstitute.org/BARD");
 
         File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(srcFile, new File(getDstDir(), "${driver.getTitle()}.png"));
+        FileUtils.copyFile(srcFile, new File(getDstDir(), driver.getTitle() + "_" + Thread.currentThread().getName() + ".png"));
 
-        assertTrue(StringUtils.isNotBlank(driver.getTitle()));
+        assertEquals("BioAssay Research Database", driver.getTitle());
         driver.quit();
     }
 

@@ -39,7 +39,11 @@ public class SeleniumUtils {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("takesScreenshot", true);
         if (PHANTOMJS == browserName) {
-
+            desiredCapabilities.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, new String[] {
+                    "--web-security=false",
+                    "--ssl-protocol=any",
+                    "--ignore-ssl-errors=true",
+                    "--webdriver-loglevel=INFO"  });
             desiredCapabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, getPhantomJsExecutablePath());
         }
         return desiredCapabilities;
