@@ -2,19 +2,26 @@ apply plugin: "groovy"
 apply plugin: "idea"
 
 repositories {
-    mavenCentral() 
+    mavenCentral()
 }
 
+configurations {
+    jmeterDep
+    compile {
+        //set compile configuration to extend from jmeterDep
+        extendsFrom jmeterDep
+    }
+}
 ext.seleniumVersion = "2.37.1"
 ext.phantomjsdriverVersion = "1.0.4"
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.1.6"
     compile "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
 //    compile "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
-    compile "com.github.detro.ghostdriver:phantomjsdriver:$phantomjsdriverVersion"
+    jmeterDep "com.github.detro.ghostdriver:phantomjsdriver:$phantomjsdriverVersion"
     compile "org.apache.commons:commons-lang3:3.1"
 
- //   seleniumServer "org.seleniumhq.selenium:selenium-server:$seleniumVersion"
+    //   seleniumServer "org.seleniumhq.selenium:selenium-server:$seleniumVersion"
 
     testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
     testCompile "junit:junit:4.11"
@@ -26,7 +33,7 @@ test {
 }
 
 task wrapper(type: Wrapper) {
-        gradleVersion = '1.8'
+    gradleVersion = '1.8'
 }
 
 task(console, dependsOn: 'classes', type: JavaExec) {
@@ -42,4 +49,18 @@ task createDirs << {
     sourceSets*.resources.srcDirs*.each { dir ->
         ant.touch(file: new File(dir, '.gitignore'), mkdirs: true)
     }
+}
+// adding tests to jar
+jar {
+    from sourceSets.test.output
+}
+
+task jmeterDeployPhantomjsDriver(type: Copy) {
+    from(configurations.jmeterDep)
+    into('apache-jmeter-2.10/lib')
+}
+task jmeterDeploy(type: Copy, dependsOn: ['jar', 'jmeterDeployPhantomjsDriver']) {
+    from('build/libs')
+    into('apache-jmeter-2.10/lib/junit')
+    include('*.jar')
 }
