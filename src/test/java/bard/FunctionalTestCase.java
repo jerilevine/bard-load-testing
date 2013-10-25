@@ -1,0 +1,34 @@
+package bard;
+
+import org.junit.After;
+import org.junit.BeforeClass;
+import org.openqa.selenium.WebDriver;
+
+import static bard.util.SeleniumUtils.FIREFOX;
+import static bard.util.SeleniumUtils.PHANTOMJS;
+import static bard.util.SeleniumUtils.getDriver;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: jlev
+ * Date: 10/25/13
+ * Time: 1:49 PM
+ * To change this template use File | Settings | File Templates.
+ */
+abstract public class FunctionalTestCase {
+    protected static WebDriver driver;
+
+    @BeforeClass
+    public static void setup(){
+        String browser = System.getProperty("browser");
+        if(browser != null && browser.equalsIgnoreCase("firefox")){
+            driver = getDriver(FIREFOX);
+        }
+        else { driver = getDriver(PHANTOMJS); }    //default
+    }
+
+    @After
+    public void teardown() {
+        if(this.driver != null) { driver.quit(); }
+    }
+}

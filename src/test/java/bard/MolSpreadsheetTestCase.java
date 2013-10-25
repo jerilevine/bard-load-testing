@@ -1,15 +1,8 @@
 package bard;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.SearchPage;
 import pages.SearchResultsPage;
-
-import static bard.util.SeleniumUtils.FIREFOX;
-import static bard.util.SeleniumUtils.PHANTOMJS;
-import static bard.util.SeleniumUtils.getDriver;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,8 +11,7 @@ import static bard.util.SeleniumUtils.getDriver;
  * Time: 12:45 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MolSpreadsheetTestCase {
-    private static WebDriver driver = getDriver(FIREFOX);
+public class MolSpreadsheetTestCase extends FunctionalTestCase {
 
     @Test
     public void testMolSpreadsheet(){
@@ -28,8 +20,4 @@ public class MolSpreadsheetTestCase {
 
     }
 
-    @After
-    public void teardown() {
-        if(this.driver != null) { driver.quit(); }
-    }
 }
