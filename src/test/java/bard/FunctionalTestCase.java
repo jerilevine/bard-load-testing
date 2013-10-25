@@ -1,6 +1,6 @@
 package bard;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 
@@ -27,8 +27,8 @@ abstract public class FunctionalTestCase {
         else { driver = getDriver(PHANTOMJS); }    //default
     }
 
-    @After
-    public void teardown() {
-        if(this.driver != null) { driver.quit(); }
+    @AfterClass
+    public static void teardown() {
+        if(driver != null) { driver.quit(); }
     }
 }
