@@ -1,3 +1,5 @@
+package bard
+
 import org.apache.commons.io.FileUtils
 import org.apache.commons.lang3.SystemUtils
 import org.openqa.selenium.By
