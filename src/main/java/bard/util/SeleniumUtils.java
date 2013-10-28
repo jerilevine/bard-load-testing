@@ -1,5 +1,6 @@
 package bard.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -50,7 +51,10 @@ public class SeleniumUtils {
     }
 
     public static String getPhantomJsExecutablePath() {
-        if (SystemUtils.IS_OS_WINDOWS) {
+        if(StringUtils.isNotBlank(System.getProperty("PHANTOM_JS_EXECUTABLE_PATH"))){
+             return System.getProperty("PHANTOM_JS_EXECUTABLE_PATH");
+        }
+        else if (SystemUtils.IS_OS_WINDOWS) {
             return "driver_executables/phantomjs-1.9.2-windows/phantomjs.exe";
         } else if (SystemUtils.IS_OS_MAC_OSX) {
             return "driver_executables/phantomjs-1.9.2-macosx/bin/phantomjs";
