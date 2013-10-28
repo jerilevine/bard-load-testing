@@ -6,7 +6,10 @@ repositories {
 }
 
 configurations {
-    jmeterDep
+    // wanted jmeter selenium dependencies isolated
+    jmeterDep   {
+        transitive = true
+    }
     compile {
         //set compile configuration to extend from jmeterDep
         extendsFrom jmeterDep
@@ -14,14 +17,14 @@ configurations {
 }
 ext.seleniumVersion = "2.37.1"
 ext.phantomjsdriverVersion = "1.0.4"
-dependencies {
-    compile "org.codehaus.groovy:groovy-all:2.1.6"
-    compile "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
-//    compile "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
-    jmeterDep "com.github.detro.ghostdriver:phantomjsdriver:$phantomjsdriverVersion"
-    compile "org.apache.commons:commons-lang3:3.1"
+ext.jmeterVersion = "2.10"
 
-    //   seleniumServer "org.seleniumhq.selenium:selenium-server:$seleniumVersion"
+dependencies {
+    jmeterDep "org.codehaus.groovy:groovy-all:2.1.6"
+    jmeterDep "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
+    jmeterDep "com.github.detro.ghostdriver:phantomjsdriver:$phantomjsdriverVersion"
+    jmeterDep "org.apache.commons:commons-lang3:3.1"
+
 
     testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
     testCompile "junit:junit:4.11"
@@ -31,36 +34,45 @@ test {
     systemProperties = System.getProperties()
     outputs.upToDateWhen { false }
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.8'
-}
-
-task(console, dependsOn: 'classes', type: JavaExec) {
-    main = 'groovy.ui.Console'
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-
-task createDirs << {
-    sourceSets*.allSource.srcDirs*.each { dir ->
-        ant.touch(file: new File(dir, '.gitignore'), mkdirs: true)
-    }
-    sourceSets*.resources.srcDirs*.each { dir ->
-        ant.touch(file: new File(dir, '.gitignore'), mkdirs: true)
-    }
-}
 // adding tests to jar
 jar {
     from sourceSets.test.output
 }
-
-task jmeterDeployPhantomjsDriver(type: Copy) {
+task jmeterDependencyDeploy(type: Copy) {
     from(configurations.jmeterDep)
-    into('apache-jmeter-2.10/lib')
+    into("apache-jmeter-${jmeterVersion}/lib")
 }
-task jmeterDeploy(type: Copy, dependsOn: ['jar', 'jmeterDeployPhantomjsDriver']) {
-    from('build/libs')
-    into('apache-jmeter-2.10/lib/junit')
-    include('*.jar')
+task jmeterDeploy(type: Copy, dependsOn: ["jar", "jmeterDependencyDeploy"]) {
+    from("build/libs")
+    into("apache-jmeter-${jmeterVersion}/lib/junit")
+    include("*.jar")
+}
+
+
+task jmeterInstall << {
+    File jmetertgz = new File(buildDir, "apache-jmeter-${jmeterVersion}.tgz")
+    if(!jmetertgz.exists()){
+        GFileUtils.copyURLToFile(new URL("http://apache.mirrors.tds.net//jmeter/binaries/apache-jmeter-${jmeterVersion}.tgz"), jmetertgz)
+    }
+    copy {
+        from tarTree(jmetertgz)
+        into getProjectDir()
+    }
+}
+
+task createDirs << {
+    sourceSets*.allSource.srcDirs*.each { dir ->
+        ant.touch(file: new File(dir, ".gitignore"), mkdirs: true)
+    }
+    sourceSets*.resources.srcDirs*.each { dir ->
+        ant.touch(file: new File(dir, ".gitignore"), mkdirs: true)
+    }
+}
+task wrapper(type: Wrapper) {
+    gradleVersion = "1.8"
+}
+
+task(console, dependsOn: "classes", type: JavaExec) {
+    main = "groovy.ui.Console"
+    classpath = sourceSets.main.runtimeClasspath
 }
