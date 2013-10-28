@@ -1,7 +1,9 @@
 .idea/
 .gradle/
+apache-jmeter-*/
 build/
 out/
 *.iml
 *.ipr
 *.iws
+jmeter.log
