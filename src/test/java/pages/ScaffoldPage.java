@@ -17,12 +17,26 @@ abstract public class ScaffoldPage {
     final static String BASEURL = "https://bard-qa.broadinstitute.org/BARD";
     final static int DEFAULT_TIMEOUT_IN_SECONDS = 10;
 
-    public WebElement waitForCondition(WebDriver driver, Integer timeoutInSeconds, String cssSelector){
+    public WebElement waitForElement(WebDriver driver, Integer timeoutInSeconds, String cssSelector){
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
     }
 
-    public WebElement waitForCondition(WebDriver driver, String cssSelector){
-        return waitForCondition(driver, DEFAULT_TIMEOUT_IN_SECONDS, cssSelector);
+    public WebElement waitForElement(WebDriver driver, String cssSelector){
+        return waitForElement(driver, DEFAULT_TIMEOUT_IN_SECONDS, cssSelector);
+    }
+
+    public void waitForTextToChange(WebDriver driver, String cssSelector, String beforeText) throws InterruptedException {
+        for(int i = 0; i < DEFAULT_TIMEOUT_IN_SECONDS; i++) {
+            final WebElement afterElement = driver.findElement(By.cssSelector(cssSelector));
+            final String afterText = afterElement.getText();
+            if(!afterText.equals(beforeText)){
+                break;
+            }
+            else if (i == DEFAULT_TIMEOUT_IN_SECONDS - 1){
+                throw new RuntimeException("Cart text did not change in " + DEFAULT_TIMEOUT_IN_SECONDS + " seconds");
+            }
+            Thread.sleep(1000);
+        }
     }
 }

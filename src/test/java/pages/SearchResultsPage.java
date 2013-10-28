@@ -33,21 +33,11 @@ public class SearchResultsPage extends ScaffoldPage {
         final String beforeCartText = beforeCartLabel.getText();
 
         // Add item to cart
-        final WebElement item = waitForCondition(driver, 5, "input[data-cart-id=\"" + id + "\"]");
+        final WebElement item = waitForElement(driver, 5, "input[data-cart-id=\"" + id + "\"]");
         item.click();
 
         // Check the cart to make sure the item made it over
-        for(int i = 0; i < DEFAULT_TIMEOUT_IN_SECONDS; i++) {
-            final WebElement afterCartLabel = driver.findElement(By.cssSelector("span.cartContents"));
-            final String afterCartText = afterCartLabel.getText();
-            if(!afterCartText.equals(beforeCartText)){
-                break;
-            }
-            else if (i == DEFAULT_TIMEOUT_IN_SECONDS - 1){
-                throw new RuntimeException("Cart text did not change in " + DEFAULT_TIMEOUT_IN_SECONDS + " seconds");
-            }
-            Thread.sleep(1000);
-        }
+        waitForTextToChange(driver, "span.cartContents", beforeCartText);
 
         return this;
     }
