@@ -23,10 +23,19 @@ import static bard.util.SeleniumUtils.getDriver;
  * To change this template use File | Settings | File Templates.
  */
 public class SearchPageTestCase {
+    final private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<WebDriver>() {
+        @Override
+        protected WebDriver initialValue() {
+            return getDriver(PHANTOMJS);
+        }
+    };
+
+
 
     @Test
     public void testFoo() {
-        WebDriver driver = getDriver(PHANTOMJS);
+        final WebDriver driver = driverThreadLocal.get();
+
         // Load page
         driver.get("http://youruseragent.info/what-is-my-user-agent");
         // Read values from page
@@ -35,31 +44,37 @@ public class SearchPageTestCase {
 
         assertTrue(StringUtils.isNotBlank(myUA));
         assertTrue(StringUtils.isNotBlank(myIP));
-        driver.quit();
     }
 
     @Test
     public void testBar() throws Exception {
-        WebDriver driver = getDriver(PHANTOMJS);
+        final WebDriver driver = driverThreadLocal.get();
         driver.get("http://www.google.com");
 
         File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(file, new File(getDstDir(), driver.getTitle() + "_" + Thread.currentThread().getName() + ".png"));
 
         assertTrue(StringUtils.isNotBlank(driver.getTitle()));
-        driver.quit();
     }
 
     @Test
     public void testBard() throws Exception {
-        WebDriver driver = getDriver(PHANTOMJS);
+        final WebDriver driver = driverThreadLocal.get();
         driver.get("https://bard-qa.broadinstitute.org/BARD");
 
         File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(srcFile, new File(getDstDir(), driver.getTitle() + "_" + Thread.currentThread().getName() + ".png"));
 
         assertEquals("BioAssay Research Database", driver.getTitle());
-        driver.quit();
+    }
+
+//    public void oneTimeTearDown(){
+//       quitWebDriver();
+//    }
+
+    private void quitWebDriver() {
+        System.out.println("quitting webDriver");
+//        driver.quit();
     }
 
     private File getDstDir() {
