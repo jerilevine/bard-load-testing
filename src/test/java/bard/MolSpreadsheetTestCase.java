@@ -1,6 +1,8 @@
 package bard;
 
+import bard.util.SearchResultsTab;
 import org.junit.Test;
+import pages.MolSpreadsheetPage;
 import pages.SearchPage;
 import pages.SearchResultsPage;
 
@@ -14,10 +16,19 @@ import pages.SearchResultsPage;
 public class MolSpreadsheetTestCase extends FunctionalTestCase {
 
     @Test
-    public void testMolSpreadsheet(){
+    public void testMolSpreadsheet() throws InterruptedException {
+        // 1. Perform search
         SearchPage searchPage = new SearchPage(this.driver);
         SearchResultsPage searchResultsPage = searchPage.search("protein methylation");
 
-    }
+        // 2. Choose assay definitions
+        searchResultsPage.addItemToCart("4658");
 
+        // 3. Choose compounds
+        searchResultsPage.clickTab(SearchResultsTab.COMPOUNDS);
+        searchResultsPage.addItemToCart("4055");
+
+        // 4. Visualize molecular spreadsheet
+        MolSpreadsheetPage molSpreadsheetPage = new MolSpreadsheetPage(this.driver);
+    }
 }
