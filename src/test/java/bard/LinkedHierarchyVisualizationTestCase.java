@@ -1,7 +1,6 @@
 package bard;
 
 import org.junit.Test;
-import pages.CompoundBioActivitySummaryPage;
 import pages.LinkedHierarchyVisualizationPage;
 
 /**
