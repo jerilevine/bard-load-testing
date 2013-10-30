@@ -35,6 +35,6 @@ public class MolSpreadsheetTestCase extends FunctionalTestCase {
     @Test
     public void testShowExperimentalDetails() {
         String cid = "11057";
-        ShowExperimentDetailsPage showExperimentDetailsPage = new ShowExperimentDetailsPage(this.driver, cid);
+        ShowExperimentDetailsPage showExperimentDetailsPage = new ShowExperimentDetailsPage(getDriver(), cid);
     }
 }
