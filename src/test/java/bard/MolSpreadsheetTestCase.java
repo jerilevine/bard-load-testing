@@ -5,6 +5,7 @@ import org.junit.Test;
 import pages.MolSpreadsheetPage;
 import pages.SearchPage;
 import pages.SearchResultsPage;
+import pages.ShowExperimentDetailsPage;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +15,6 @@ import pages.SearchResultsPage;
  * To change this template use File | Settings | File Templates.
  */
 public class MolSpreadsheetTestCase extends FunctionalTestCase {
-
     @Test
     public void testMolSpreadsheet() throws InterruptedException {
         // 1. Perform search
@@ -30,5 +30,11 @@ public class MolSpreadsheetTestCase extends FunctionalTestCase {
 
         // 4. Visualize molecular spreadsheet
         MolSpreadsheetPage molSpreadsheetPage = new MolSpreadsheetPage(this.driver);
+    }
+
+    @Test
+    public void testShowExperimentalDetails() {
+        String cid = "11057";
+        ShowExperimentDetailsPage showExperimentDetailsPage = new ShowExperimentDetailsPage(this.driver, cid);
     }
 }
