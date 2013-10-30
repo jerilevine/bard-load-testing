@@ -33,7 +33,7 @@ public class SearchResultsPage extends ScaffoldPage {
         final String beforeCartText = beforeCartLabel.getText();
 
         // Add item to cart
-        final WebElement item = waitForElement(driver, 5, "input[data-cart-id=\"" + id + "\"]");
+        final WebElement item = waitForElement(driver,"input[data-cart-id=\"" + id + "\"]");
         item.click();
 
         // Check the cart to make sure the item made it over

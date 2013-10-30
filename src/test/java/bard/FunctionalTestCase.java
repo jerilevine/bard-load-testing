@@ -20,11 +20,7 @@ abstract public class FunctionalTestCase {
 
     @BeforeClass
     public static void setup(){
-        String browser = System.getProperty("browser");
-        if(browser != null && browser.equalsIgnoreCase("firefox")){
-            driver = getDriver(FIREFOX);
-        }
-        else { driver = getDriver(PHANTOMJS); }    //default
+        driver = getDriver(System.getProperty("browser"));
     }
 
     @AfterClass

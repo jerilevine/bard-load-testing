@@ -1,10 +1,12 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import bard.util.SeleniumUtils;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,9 +36,11 @@ abstract public class ScaffoldPage {
                 break;
             }
             else if (i == DEFAULT_TIMEOUT_IN_SECONDS - 1){
+                SeleniumUtils.takesScreenshot(driver);
                 throw new RuntimeException("Cart text did not change in " + DEFAULT_TIMEOUT_IN_SECONDS + " seconds");
             }
             Thread.sleep(1000);
         }
     }
+
 }
