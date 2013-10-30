@@ -18,7 +18,7 @@ public class MolSpreadsheetTestCase extends FunctionalTestCase {
     @Test
     public void testMolSpreadsheet() throws InterruptedException {
         // 1. Perform search
-        SearchPage searchPage = new SearchPage(this.driver);
+        SearchPage searchPage = new SearchPage(getDriver());
         SearchResultsPage searchResultsPage = searchPage.search("protein methylation");
 
         // 2. Choose assay definitions
@@ -29,6 +29,6 @@ public class MolSpreadsheetTestCase extends FunctionalTestCase {
         searchResultsPage.addItemToCart("4055");
 
         // 4. Visualize molecular spreadsheet
-        MolSpreadsheetPage molSpreadsheetPage = new MolSpreadsheetPage(this.driver);
+        MolSpreadsheetPage molSpreadsheetPage = new MolSpreadsheetPage(getDriver());
     }
 }

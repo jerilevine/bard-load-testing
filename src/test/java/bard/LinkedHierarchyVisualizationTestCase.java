@@ -13,6 +13,6 @@ import pages.LinkedHierarchyVisualizationPage;
 public class LinkedHierarchyVisualizationTestCase extends FunctionalTestCase {
     @Test
     public void testLinkedHierarchyVisualization(){
-        LinkedHierarchyVisualizationPage linkedHierarchyVisualizationPage = new LinkedHierarchyVisualizationPage(this.driver, "5924");
+        LinkedHierarchyVisualizationPage linkedHierarchyVisualizationPage = new LinkedHierarchyVisualizationPage(getDriver(), "5924");
     }
 }

@@ -1,5 +1,6 @@
 package bard;
 
+import bard.util.SeleniumUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
@@ -15,16 +16,29 @@ import static bard.util.SeleniumUtils.getDriver;
  * Time: 1:49 PM
  * To change this template use File | Settings | File Templates.
  */
-abstract public class FunctionalTestCase {
-    protected static WebDriver driver;
+public class FunctionalTestCase {
+    private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<WebDriver>() {
+        @Override
+        protected WebDriver initialValue() {
+            return SeleniumUtils.getDriver(System.getProperty("browser"));
+        }
+    };
 
     @BeforeClass
-    public static void setup(){
-        driver = getDriver(System.getProperty("browser"));
+    public static void setup() {
+        driverThreadLocal.get();
     }
 
     @AfterClass
     public static void teardown() {
-        if(driver != null) { driver.quit(); }
+        final WebDriver driver = driverThreadLocal.get();
+        if (driver != null) {
+            driver.quit();
+        }
+        driverThreadLocal.remove();
+    }
+
+    public static WebDriver getDriver() {
+        return driverThreadLocal.get();
     }
 }

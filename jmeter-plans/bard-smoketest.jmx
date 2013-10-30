@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">5</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1382733675000</longProp>
         <longProp name="ThreadGroup.end_time">1382733675000</longProp>
@@ -28,7 +28,7 @@
       <hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">5</stringProp>
+          <stringProp name="LoopController.loops">10</stringProp>
         </LoopController>
         <hashTree>
           <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
@@ -38,14 +38,14 @@
               <stringProp name="parameters"></stringProp>
               <stringProp name="filename"></stringProp>
               <stringProp name="cacheKey">initialize_browser</stringProp>
-              <stringProp name="script">new bard.SearchPageTestCase().driverThreadLocal.get();</stringProp>
+              <stringProp name="script">bard.FunctionalTestCase.setup();</stringProp>
             </JSR223Sampler>
             <hashTree/>
           </hashTree>
-          <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="JUnit Request" enabled="true">
+          <JUnitSampler guiclass="JUnitTestSamplerGui" testclass="JUnitSampler" testname="loadSearchPage" enabled="true">
             <stringProp name="junitSampler.classname">bard.SearchPageTestCase</stringProp>
             <stringProp name="junitsampler.constructorstring"></stringProp>
-            <stringProp name="junitsampler.method">testBard</stringProp>
+            <stringProp name="junitsampler.method">testLoadingHomePage</stringProp>
             <stringProp name="junitsampler.pkg.filter"></stringProp>
             <stringProp name="junitsampler.success">Test successful</stringProp>
             <stringProp name="junitsampler.success.code">1000</stringProp>
@@ -65,7 +65,7 @@
           <stringProp name="parameters"></stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="cacheKey">quit_browser</stringProp>
-          <stringProp name="script">new bard.SearchPageTestCase().quitWebDriver()</stringProp>
+          <stringProp name="script">bard.FunctionalTestCase.teardown();</stringProp>
         </JSR223Sampler>
         <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="false">

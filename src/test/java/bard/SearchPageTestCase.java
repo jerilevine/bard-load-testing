@@ -20,11 +20,11 @@ public class SearchPageTestCase extends FunctionalTestCase {
     @Test
     public void testLoadingHomePage() throws Exception {
 
-        driver.get("https://bard-qa.broadinstitute.org/BARD");
+        getDriver().get("https://bard-qa.broadinstitute.org/BARD");
 
-        SeleniumUtils.takesScreenshot(driver);
+        SeleniumUtils.takesScreenshot(getDriver());
 
-        assertEquals("BioAssay Research Database", driver.getTitle());
+        assertEquals("BioAssay Research Database", getDriver().getTitle());
     }
 
 

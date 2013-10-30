@@ -13,6 +13,6 @@ import pages.CompoundBioActivitySummaryPage;
 public class CompoundBioActivitySummaryTestCase extends FunctionalTestCase {
     @Test
     public void testCompoundBioActivitySummary(){
-        CompoundBioActivitySummaryPage compoundBioActivitySummaryPage = new CompoundBioActivitySummaryPage(this.driver, "2259");
+        CompoundBioActivitySummaryPage compoundBioActivitySummaryPage = new CompoundBioActivitySummaryPage(getDriver(), "2259");
     }
 }
