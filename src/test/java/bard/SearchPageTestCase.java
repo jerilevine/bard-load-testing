@@ -72,9 +72,10 @@ public class SearchPageTestCase {
 //       quitWebDriver();
 //    }
 
-    private void quitWebDriver() {
+    public void quitWebDriver() {
         System.out.println("quitting webDriver");
-//        driver.quit();
+        driverThreadLocal.get().quit();
+        driverThreadLocal.remove();
     }
 
     private File getDstDir() {
