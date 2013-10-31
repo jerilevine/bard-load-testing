@@ -20,8 +20,10 @@ public class MolSpreadsheetPage extends ScaffoldPage {
         driver.get(URL);
 
         this.title = driver.getTitle();
+        // looking for the table header row
+        waitForElement(driver, 60, "tr.molSpreadSheetHead");
 
-        if(!atMolSpreadsheetPage()){
+        if (!atMolSpreadsheetPage()) {
             throw new IllegalStateException("Did not arrive at molecular spreadsheet");
         }
     }

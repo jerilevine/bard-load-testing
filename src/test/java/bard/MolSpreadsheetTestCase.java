@@ -1,11 +1,15 @@
 package bard;
 
+import bard.util.MolSpreadsheetHelper;
 import bard.util.SearchResultsTab;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import pages.MolSpreadsheetPage;
 import pages.SearchPage;
 import pages.SearchResultsPage;
 import pages.ShowExperimentDetailsPage;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,6 +19,8 @@ import pages.ShowExperimentDetailsPage;
  * To change this template use File | Settings | File Templates.
  */
 public class MolSpreadsheetTestCase extends FunctionalTestCase {
+    MolSpreadsheetHelper molSpreadsheetHelper = new MolSpreadsheetHelper();
+
     @Test
     public void testMolSpreadsheet() throws InterruptedException {
         // 1. Perform search
@@ -36,5 +42,24 @@ public class MolSpreadsheetTestCase extends FunctionalTestCase {
     public void testShowExperimentalDetails() {
         String cid = "11057";
         ShowExperimentDetailsPage showExperimentDetailsPage = new ShowExperimentDetailsPage(getDriver(), cid);
+    }
+
+    @Test
+    public void testMolSpreadsheetForCidsActiveInManyExperiments() throws Exception{
+        // 1. Perform search
+        SearchPage searchPage = new SearchPage(getDriver());
+        final List<Integer> cids = molSpreadsheetHelper.findCidsByMinExperimentCount(40);
+        final String searchTerm =   "cid: " + StringUtils.join(cids, " ");
+        System.out.println(searchTerm);
+        SearchResultsPage searchResultsPage = searchPage.search(searchTerm);
+
+        // 2. Choose compounds
+        searchResultsPage.clickTab(SearchResultsTab.COMPOUNDS);
+        for(Integer cid : cids)           {
+            searchResultsPage.addItemToCart(cid.toString());
+        }
+
+        // 4. Visualize molecular spreadsheet
+        MolSpreadsheetPage molSpreadsheetPage = new MolSpreadsheetPage(getDriver());
     }
 }

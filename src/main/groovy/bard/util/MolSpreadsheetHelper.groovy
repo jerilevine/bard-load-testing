@@ -19,9 +19,9 @@ class MolSpreadsheetHelper {
 
         this.getClass().getClassLoader().getResource("./pubchem_cid_disctinct_exp_count.csv").eachLine() { line ->
             def (String pubchemCid, String experimentCount) = line.split(',')
-           if(NumberUtils.isNumber(pubchemCid)){
-               cidToExperimentCountMap.put(pubchemCid.toInteger(), experimentCount.toInteger())
-           }
+            if (NumberUtils.isNumber(pubchemCid)) {
+                cidToExperimentCountMap.put(pubchemCid.toInteger(), experimentCount.toInteger())
+            }
 
         }
     }
@@ -32,7 +32,17 @@ class MolSpreadsheetHelper {
      * @return list of CIDs that appeared in at least the minimumExperiments specified
      */
     List<Integer> findCidsByMinExperimentCount(Integer minimumExperiments) {
-        cidToExperimentCountMap.findAll { k, v -> v >= minimumExperiments }.collect{ k,v -> k}
+        cidToExperimentCountMap.findAll { k, v -> v >= minimumExperiments }.collect { k, v -> k }
     }
+
+    /**
+     *
+     * @param experimentCount
+     * @return list of CIDs that appeared in experimentCount number of experiments
+     */
+    List<Integer> findCidsWithExperimentCount(Integer experimentCount) {
+        cidToExperimentCountMap.findAll { k, v -> v == experimentCount }.collect { k, v -> k }
+    }
+
 
 }
