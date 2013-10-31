@@ -7,7 +7,7 @@ repositories {
 
 configurations {
     // wanted jmeter selenium dependencies isolated
-    jmeterDep   {
+    jmeterDep {
         transitive = true
     }
     compile {
@@ -50,13 +50,34 @@ task jmeterDeploy(type: Copy, dependsOn: ["jar", "jmeterDependencyDeploy"]) {
 
 
 task jmeterInstall << {
-    File jmetertgz = new File(buildDir, "apache-jmeter-${jmeterVersion}.tgz")
-    if(!jmetertgz.exists()){
-        GFileUtils.copyURLToFile(new URL("http://apache.mirrors.tds.net//jmeter/binaries/apache-jmeter-${jmeterVersion}.tgz"), jmetertgz)
+    // optionally download JMeter and install
+    final String jmeterName = "apache-jmeter-${jmeterVersion}"
+    final File jmetertgz = new File(buildDir, "${jmeterName}.tgz")
+    if (!jmetertgz.exists()) {
+        GFileUtils.copyURLToFile(new URL("http://apache.mirrors.tds.net//jmeter/binaries/${jmeterName}.tgz"), jmetertgz)
     }
     copy {
         from tarTree(jmetertgz)
         into getProjectDir()
+    }
+    // optionally download JMeter Standard Plugin and install
+    final File jmeterPluginsStdZip = new File(buildDir, "JMeterPlugins-Standard-1.1.2.zip")
+    if (!jmeterPluginsStdZip.exists()) {
+        GFileUtils.copyURLToFile(new URL("http://jmeter-plugins.org/downloads/file/JMeterPlugins-Standard-1.1.2.zip"), jmeterPluginsStdZip)
+    }
+    copy {
+        from zipTree(jmeterPluginsStdZip)
+        into(new File(getProjectDir(), jmeterName))
+    }
+    // optionally download ServerAgent that supports a component in Standard Plugin to monitor servers during tests
+    final String serverAgentName = "ServerAgent-2.2.1"
+    final File serverAgentZip = new File(buildDir, "${serverAgentName}.zip")
+    if (!new File(buildDir, "ServerAgent-2.2.1.zip").exists()) {
+        GFileUtils.copyURLToFile(new URL("http://jmeter-plugins.org/downloads/file/ServerAgent-2.2.1.zip"), serverAgentZip)
+    }
+    copy {
+        from zipTree(serverAgentZip)
+        into(new File(getProjectDir(), "${jmeterName}/${serverAgentName}"))
     }
 }
 

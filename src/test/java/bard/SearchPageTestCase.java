@@ -4,6 +4,7 @@ import bard.util.SeleniumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import pages.SearchPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,11 +21,9 @@ public class SearchPageTestCase extends FunctionalTestCase {
     @Test
     public void testLoadingHomePage() throws Exception {
 
-        getDriver().get("https://bard-qa.broadinstitute.org/BARD");
+        SearchPage searchPage = new SearchPage(getDriver());
 
-        SeleniumUtils.takesScreenshot(getDriver());
-
-        assertEquals("BioAssay Research Database", getDriver().getTitle());
+        assertTrue(searchPage.atSearchPage());
     }
 
 

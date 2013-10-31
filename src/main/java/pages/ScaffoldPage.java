@@ -16,7 +16,7 @@ import java.io.File;
  * To change this template use File | Settings | File Templates.
  */
 abstract public class ScaffoldPage {
-    final static String BASEURL = "https://bard-qa.broadinstitute.org/BARD";
+    final static String BASEURL = "https://bard-dev.broadinstitute.org/BARD";
     final static int DEFAULT_TIMEOUT_IN_SECONDS = 10;
 
     public WebElement waitForElement(WebDriver driver, Integer timeoutInSeconds, String cssSelector){
