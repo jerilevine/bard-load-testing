@@ -17,7 +17,7 @@ class MolSpreadsheetHelper {
         // looking to parse a file with CID and distinct experiment count
         // first line is a header
 
-        this.getClass().getClassLoader().getResource("./pubchem_cid_disctinct_exp_count.csv").eachLine() { line ->
+        this.getClass().getClassLoader().getResource("pubchem_cid_disctinct_exp_count.csv").eachLine() { line ->
             def (String pubchemCid, String experimentCount) = line.split(',')
             if (NumberUtils.isNumber(pubchemCid)) {
                 cidToExperimentCountMap.put(pubchemCid.toInteger(), experimentCount.toInteger())
