@@ -21,7 +21,9 @@ public class MolSpreadsheetPage extends ScaffoldPage {
 
         this.title = driver.getTitle();
         // looking for the table header row
-        waitForElement(driver, 60, "tr.molSpreadSheetHead");
+        // this is definitely long 3 * 60 seconds
+        // but want to see if this returns even if very slow
+        waitForElement(driver, 3 * 60, "tr.molSpreadSheetHead");
 
         if (!atMolSpreadsheetPage()) {
             throw new IllegalStateException("Did not arrive at molecular spreadsheet");
