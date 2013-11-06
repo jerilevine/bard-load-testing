@@ -1,12 +1,11 @@
 package bard;
 
 import bard.util.SeleniumUtils;
+import groovy.util.GroovyScriptEngine;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 
-import static bard.util.SeleniumUtils.FIREFOX;
-import static bard.util.SeleniumUtils.PHANTOMJS;
 import static bard.util.SeleniumUtils.getDriver;
 
 /**
@@ -17,28 +16,26 @@ import static bard.util.SeleniumUtils.getDriver;
  * To change this template use File | Settings | File Templates.
  */
 public class FunctionalTestCase {
-    private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<WebDriver>() {
-        @Override
-        protected WebDriver initialValue() {
-            return SeleniumUtils.getDriver(System.getProperty("browser"));
-        }
-    };
+
+    private static final String[] GSE_ROOTS = new String[]{"jmeter-groovy-scripts"};
+    protected static GroovyScriptEngine gse = null;
 
     @BeforeClass
-    public static void setup() {
-        driverThreadLocal.get();
+    public static void setup() throws Exception{
+        SeleniumUtils.getDriver();
+        gse = new GroovyScriptEngine(GSE_ROOTS);
     }
 
     @AfterClass
     public static void teardown() {
-        final WebDriver driver = driverThreadLocal.get();
-        if (driver != null) {
-            driver.quit();
-        }
-        driverThreadLocal.remove();
+        SeleniumUtils.quitDrivers();
     }
 
     public static WebDriver getDriver() {
-        return driverThreadLocal.get();
+        return SeleniumUtils.getDriver();
+    }
+
+    public static WebDriver getDriver(String browser) {
+        return SeleniumUtils.getDriver(browser);
     }
 }

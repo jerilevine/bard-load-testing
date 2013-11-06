@@ -2,6 +2,9 @@ package bard;
 
 import bard.util.MolSpreadsheetHelper;
 import bard.util.SearchResultsTab;
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+import groovy.util.GroovyScriptEngine;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import pages.MolSpreadsheetPage;
@@ -19,7 +22,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class MolSpreadsheetTestCase extends FunctionalTestCase {
-    MolSpreadsheetHelper molSpreadsheetHelper = new MolSpreadsheetHelper();
 
     @Test
     public void testMolSpreadsheet() throws InterruptedException {
@@ -45,21 +47,11 @@ public class MolSpreadsheetTestCase extends FunctionalTestCase {
     }
 
     @Test
-    public void testMolSpreadsheetForCidsActiveInManyExperiments() throws Exception{
-        // 1. Perform search
-        SearchPage searchPage = new SearchPage(getDriver());
-        final List<Integer> cids = molSpreadsheetHelper.findCidsByMinExperimentCount(40);
-        final String searchTerm =   "cid: " + StringUtils.join(cids, " ");
-        System.out.println(searchTerm);
-        SearchResultsPage searchResultsPage = searchPage.search(searchTerm);
+    public void testMolSpreadsheetForCidsActiveInManyExperiments() throws Exception {
 
-        // 2. Choose compounds
-        searchResultsPage.clickTab(SearchResultsTab.COMPOUNDS);
-        for(Integer cid : cids)           {
-            searchResultsPage.addItemToCart(cid.toString());
-        }
+        final Binding binding = new Binding();
+        binding.setVariable("Parameters", "");
+        gse.run("MolSpreadsheetScript.groovy", binding);
 
-        // 4. Visualize molecular spreadsheet
-        MolSpreadsheetPage molSpreadsheetPage = new MolSpreadsheetPage(getDriver());
     }
 }

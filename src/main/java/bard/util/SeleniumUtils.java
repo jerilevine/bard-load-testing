@@ -26,16 +26,37 @@ public class SeleniumUtils {
     public static final String FIREFOX = "firefox";
     public static final String PHANTOMJS = "phantomjs";
 
+    private static ThreadLocal<WebDriver> firefoxDriver = new ThreadLocal<WebDriver>() {
+        @Override
+        protected WebDriver initialValue() {
+            return new FirefoxDriver(getDesiredCapabilities(FIREFOX));
+        }
+    };
+
+    private static ThreadLocal<WebDriver> phantomJsDriver = new ThreadLocal<WebDriver>() {
+        @Override
+        protected WebDriver initialValue() {
+            return new PhantomJSDriver(getDesiredCapabilities(PHANTOMJS));
+        }
+    };
+
+    /**
+     * get the default driver implementation or the one specifyed by the -Dbrowser arg
+     * @return
+     */
+    public static WebDriver getDriver(){
+        return getDriver(System.getProperty("browser"));
+    }
+    /**
+     * @param browserName
+     * @return an implementation of a WebDriver dependent on the browser name passed in
+     */
     public static WebDriver getDriver(String browserName) {
         WebDriver driver = null;
         if (FIREFOX.equals(browserName)) {
-
-            driver = new FirefoxDriver(getDesiredCapabilities(browserName));
-        } else if (PHANTOMJS.equals(browserName)) {
-
-            driver = new PhantomJSDriver(getDesiredCapabilities(browserName));
-        } else {   // default to phantomJs
-            driver = new PhantomJSDriver(getDesiredCapabilities(PHANTOMJS));
+            driver = firefoxDriver.get();
+        } else {
+            driver = phantomJsDriver.get();
         }
         driver.manage().window().setSize(new Dimension(1024, 768));
         return driver;
@@ -82,5 +103,21 @@ public class SeleniumUtils {
         final File dstDir = new File("build/screenshots");
         dstDir.mkdirs();
         return dstDir;
+    }
+
+    /**
+     * quit all threadlocal webdrivers
+     */
+    public static void quitDrivers() {
+        quitDriver(firefoxDriver);
+        quitDriver(phantomJsDriver);
+    }
+
+    private static void quitDriver(ThreadLocal<WebDriver> threadLocalDriver) {
+        final WebDriver driver = threadLocalDriver.get();
+        if (driver != null) {
+            driver.quit();
+        }
+        threadLocalDriver.remove();
     }
 }
