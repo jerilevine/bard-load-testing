@@ -18,7 +18,7 @@ class MolSpreadsheetUnitSpec extends FunctionalUnitSpec {
         expect: 'we can drive the script '
         final Binding binding = new Binding();
         binding.setVariable("Parameters", "");
-        gse.run("MolSpreadsheetFromCidsScript.groovy", binding);
+        gse.run("MolSpreadsheetFromCids.groovy", binding);
     }
 
     void testShowExperimentalDetails() {
