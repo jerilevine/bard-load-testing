@@ -42,10 +42,26 @@
             </JSR223Sampler>
             <hashTree/>
           </hashTree>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="molSpreadSheetScript" enabled="true">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="MolSpreadsheetFromCids" enabled="false">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters">[experimentCount:6, cidLimit: 5]</stringProp>
             <stringProp name="filename">jmeter-groovy-scripts/molSpreadsheet/MolSpreadsheetFromCids.groovy</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="MolSpreadsheetShowExperimentDetailsForCid" enabled="false">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename">jmeter-groovy-scripts/molSpreadsheet/MolSpreadsheetShowExperimentDetailsForCid.groovy</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SearchForTermUseCartAndViewMolSpreadsheet" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename">jmeter-groovy-scripts/molSpreadsheet/SearchForTermUseCartAndViewMolSpreadsheet.groovy</stringProp>
             <stringProp name="cacheKey"></stringProp>
             <stringProp name="script"></stringProp>
           </JSR223Sampler>
