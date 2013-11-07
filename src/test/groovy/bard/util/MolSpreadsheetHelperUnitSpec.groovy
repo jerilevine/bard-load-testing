@@ -26,8 +26,8 @@ class MolSpreadsheetHelperUnitSpec extends Specification {
         helper.findCidsByMinExperimentCount(minimumNumExperiments) == expectedCids
         where:
         desc                      | minimumNumExperiments | expectedCids
-        "cids active in at least" | 40                    | [66541, 6763, 701067, 375895, 10864994, 2408467, 443939, 460747, 254021, 6364517, 9551964, 5718631, 3609942, 1472216]
-        "cids active in at least" | 48                    | [66541, 6763]
+        "cids active in at least" | 29                    | [3689413]
+        "cids active in at least" | 26                    | [2398303,5718138,9551964,3689413]
     }
 
     void "test findCidsWithExperimentCount #desc #numExperiments experiments"() {
@@ -36,9 +36,7 @@ class MolSpreadsheetHelperUnitSpec extends Specification {
 
         where:
         desc                  | numExperiments | expectedCidCount
-        "cids active exactly" | 48             | 2
-        "cids active exactly" | 47             | 1
-        "cids active exactly" | 46             | 1
-        "cids active exactly" | 20             | 46
+        "cids active exactly" | 29             | 1
+        "cids active exactly" | 26             | 3
     }
 }

@@ -6,7 +6,6 @@ import pages.MolSpreadsheetPage
 import pages.SearchPage
 import pages.SearchResultsPage
 
-
 println("Parameters : ${Parameters}" )
 def parametersMap = Parameters?  evaluate(Parameters) : [:]
 
@@ -18,7 +17,7 @@ List<Integer> cids = molSpreadsheetHelper.findCidsWithExperimentCount(parameters
 cids = cids.subList(0,parametersMap.cidLimit?:5)
 println("cids.size() : ${cids.size()}")
 final String searchTerm =   "cid: " + StringUtils.join(cids, " ");
-//println(searchTerm);
+println(searchTerm);
 final SearchResultsPage searchResultsPage = searchPage.search(searchTerm);
 
 // 2. Choose compounds

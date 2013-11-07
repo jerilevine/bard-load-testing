@@ -17,7 +17,7 @@ import static bard.util.SeleniumUtils.getDriver;
  */
 public class FunctionalTestCase {
 
-    private static final String[] GSE_ROOTS = new String[]{"jmeter-groovy-scripts"};
+    private static final String[] GSE_ROOTS = new String[]{"jmeter-groovy-scripts", "jmeter-groovy-scripts/molSpreadsheet"};
     protected static GroovyScriptEngine gse = null;
 
     @BeforeClass
