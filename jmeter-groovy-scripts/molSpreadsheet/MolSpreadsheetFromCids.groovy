@@ -21,10 +21,8 @@ println(searchTerm);
 final SearchResultsPage searchResultsPage = searchPage.search(searchTerm);
 
 // 2. Choose compounds
-searchResultsPage.clickTab(SearchResultsTab.COMPOUNDS);
-for(Integer cid : cids)           {
-    searchResultsPage.addItemToCart(cid.toString());
-}
+searchResultsPage.clearQueryCart();
+searchResultsPage.addAllToCart(SearchResultsTab.COMPOUNDS);
 
 // 4. Visualize molecular spreadsheet
 MolSpreadsheetPage molSpreadsheetPage = new MolSpreadsheetPage(getDriver());

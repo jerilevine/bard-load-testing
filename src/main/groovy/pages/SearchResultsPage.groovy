@@ -27,6 +27,34 @@ public class SearchResultsPage extends ScaffoldPage {
         }
     }
 
+    public SearchResultsPage clearQueryCart() {
+        final WebElement queryCart = driver.findElement(By.cssSelector("span.cartContents"));
+        queryCart.click();
+
+        final WebElement clearAllButton = waitForElement(driver, "a.removeAllFromCart.btn");
+        clearAllButton.click();
+
+        waitForText(driver, DEFAULT_TIMEOUT_IN_SECONDS, "span.cartContents", "Empty");
+
+        return this;
+    }
+
+    public SearchResultsPage addAllToCart(SearchResultsTab tabName) throws InterruptedException {
+        // Check the cart before starting
+        final WebElement beforeCartLabel = driver.findElement(By.cssSelector("span.cartContents"));
+        final String beforeCartText = beforeCartLabel.getText();
+
+        clickTab(tabName);
+
+        final WebElement addAllButton = driver.findElement(By.id("addAllItemsToCart"));
+        addAllButton.click();
+
+        // Check the cart to make sure the items made it over
+        waitForTextToChange(driver, "span.cartContents", beforeCartText);
+
+        return this;
+    }
+
     public SearchResultsPage addItemToCart(String id) throws InterruptedException {
         // Check the cart before starting
         final WebElement beforeCartLabel = driver.findElement(By.cssSelector("span.cartContents"));

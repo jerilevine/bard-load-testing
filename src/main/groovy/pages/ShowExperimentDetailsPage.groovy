@@ -21,7 +21,7 @@ public class ShowExperimentDetailsPage extends ScaffoldPage {
 
     private final String title;
 
-    public ShowExperimentDetailsPage(WebDriver driver, Integer cid) {
+    public ShowExperimentDetailsPage(WebDriver driver, String cid) {
         this.URL = buildUrl(cid);
 
         this.driver = driver;

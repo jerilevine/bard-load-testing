@@ -1,7 +1,6 @@
 package pages;
 
 import bard.util.SeleniumUtils;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -43,4 +42,8 @@ abstract public class ScaffoldPage {
         }
     }
 
+    public boolean waitForText(WebDriver driver, Integer timeoutInSeconds, String cssSelector, String expectedText){
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        return wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(cssSelector), expectedText));
+    }
 }
