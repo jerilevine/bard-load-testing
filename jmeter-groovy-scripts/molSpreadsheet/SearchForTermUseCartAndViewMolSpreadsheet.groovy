@@ -3,7 +3,7 @@ import pages.MolSpreadsheetPage
 import pages.SearchPage
 import pages.SearchResultsPage
 
-import static  bard.util.SeleniumUtils.*
+import static bard.util.SeleniumUtils.getDriver
 
 /**
  * Created with IntelliJ IDEA.
