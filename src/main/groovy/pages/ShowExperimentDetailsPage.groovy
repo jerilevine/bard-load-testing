@@ -27,6 +27,8 @@ public class ShowExperimentDetailsPage extends ScaffoldPage {
         this.driver = driver;
         driver.get(this.URL);
 
+        waitForElement(driver, 3 * 60, "table.molSpreadSheet");
+
         this.title = driver.getTitle();
 
         if(!atShowExperimentDetailsPage()){
