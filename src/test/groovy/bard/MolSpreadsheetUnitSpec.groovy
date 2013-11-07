@@ -1,7 +1,6 @@
 package bard
 
 import pages.ShowExperimentDetailsPage
-import spock.lang.Specification
 import spock.lang.Unroll
 
 /**

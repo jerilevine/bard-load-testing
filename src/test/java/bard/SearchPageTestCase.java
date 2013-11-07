@@ -1,9 +1,6 @@
 package bard;
 
-import bard.util.SeleniumUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import pages.SearchPage;
 
 import static org.junit.Assert.assertEquals;
